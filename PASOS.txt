@@ -1,5 +1,5 @@
 ═══════════════════════════════════════
-🚀 SUBIR CAMBIOS A GITHUB - PASOS SIMPLES
+🚀 SUBIR CAMBIOS A GITHUB
 ═══════════════════════════════════════
 
 ABRIR: Git Bash en la carpeta Barberia_PuertoVaras
@@ -13,11 +13,39 @@ COPIAR Y PEGAR ESTOS 3 COMANDOS:
 LISTO ✅
 
 ═══════════════════════════════════════
-NOTAS:
+🌐 LINK DE LA PÁGINA
 ═══════════════════════════════════════
 
-- Si pide usuario: MarriGUB
-- Si pide contraseña: usar TOKEN de GitHub
-- Si da error: cerrar Git Bash y abrir de nuevo
+👉 https://marriGUB.github.io/Barberia_PuertoVaras
+
+(Se actualiza 1-5 minutos después de subir cambios)
+
+═══════════════════════════════════════
+📱 PROBAR EN CELULAR
+═══════════════════════════════════════
+
+Abrir el link en cualquier navegador:
+https://marriGUB.github.io/Barberia_PuertoVaras
+
+═══════════════════════════════════════
+🔄 SI NO VES LOS CAMBIOS
+═══════════════════════════════════════
+
+- Espera 2-3 minutos
+- Presiona Ctrl + F5 en el navegador
+- O abre en modo incógnito
+
+═══════════════════════════════════════
+🔗 REPOSITORIO EN GITHUB
+═══════════════════════════════════════
+
+https://github.com/MarriGUB/Barberia_PuertoVaras
+
+═══════════════════════════════════════
+👤 DATOS DE ACCESO
+═══════════════════════════════════════
+
+Usuario: MarriGUB
+Contraseña: TOKEN de GitHub (NO tu contraseña normal)
 
 ═══════════════════════════════════════
