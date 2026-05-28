@@ -57,3 +57,30 @@ window.addEventListener('scroll', () => {
     
     lastScroll = currentScroll;
 });
+
+// 🌗 MODO CLARO/OSCURO
+function toggleTheme() {
+    const body = document.body;
+    const icon = document.getElementById('theme-icon');
+    
+    body.classList.toggle('light-mode');
+    
+    if (body.classList.contains('light-mode')) {
+        icon.className = 'fas fa-sun';
+        localStorage.setItem('theme', 'light');
+    } else {
+        icon.className = 'fas fa-moon';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Cargar tema guardado
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    const icon = document.getElementById('theme-icon');
+    
+    if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+        icon.className = 'fas fa-sun';
+    }
+});
