@@ -1,0 +1,23 @@
+═══════════════════════════════════════
+🚀 SUBIR CAMBIOS A GITHUB - PASOS SIMPLES
+═══════════════════════════════════════
+
+ABRIR: Git Bash en la carpeta Barberia_PuertoVaras
+
+COPIAR Y PEGAR ESTOS 3 COMANDOS:
+
+1) git add .
+2) git commit -m "cambios"
+3) git push
+
+LISTO ✅
+
+═══════════════════════════════════════
+NOTAS:
+═══════════════════════════════════════
+
+- Si pide usuario: MarriGUB
+- Si pide contraseña: usar TOKEN de GitHub
+- Si da error: cerrar Git Bash y abrir de nuevo
+
+═══════════════════════════════════════
