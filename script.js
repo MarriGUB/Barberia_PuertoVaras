@@ -1,4 +1,4 @@
-// ✨ ANIMACIÓN DE ENTRADA
+// ✨ ANIMACIÓN DE ENTRADA (2 segundos, sin click)
 window.addEventListener('load', () => {
     setTimeout(() => {
         const loader = document.getElementById('pageLoader');
@@ -108,7 +108,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.service-card, .info-card, .gallery-grid img').forEach(el => {
+document.querySelectorAll('.service-card, .info-card, .gallery-grid img, .corte-card').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
@@ -123,10 +123,43 @@ window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
     if (currentScroll > lastScroll) {
-        navbar.style.transform = 'translateY(-100%)';
+        if (navbar) navbar.style.transform = 'translateY(-100%)';
     } else {
-        navbar.style.transform = 'translateY(0)';
+        if (navbar) navbar.style.transform = 'translateY(0)';
     }
     
     lastScroll = currentScroll;
 });
+
+// 📸 DESLIZADOR HORIZONTAL: permitir arrastrar con mouse
+const slider = document.querySelector('.cortes-slider');
+if (slider) {
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener('mouseleave', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mouseup', () => {
+        isDown = false;
+        slider.style.cursor = 'grab';
+    });
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+    });
+}

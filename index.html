@@ -9,11 +9,12 @@
 </head>
 <body>
     
-    <!-- ✨ ANIMACIÓN DE ENTRADA -->
+    <!-- ✨ ANIMACIÓN DE ENTRADA (2 segundos, sin click) -->
     <div class="page-loader" id="pageLoader">
         <div class="loader-content">
             <i class="fas fa-cut"></i>
             <h2>Barbería</h2>
+            <p class="welcome-message">Bienvenido</p>
         </div>
     </div>
 
@@ -54,13 +55,13 @@
                 <img src="img/logo.jpg" alt="Barbería">
             </div>
             <div class="nav-info">
-                <span><i class="fas fa-phone"></i> +56 9 0000 0000</span>
+                <span><i class="fas fa-phone"></i> +56 9 9695 7103</span>
             </div>
         </nav>
         <div class="hero-content">
             <h1>Barbería</h1>
             <p>Cortes clásicos y modernos con el mejor estilo</p>
-            <a href="#" class="btn-whatsapp">
+            <a href="https://wa.me/56996957103" class="btn-whatsapp" target="_blank">
                 <i class="fab fa-whatsapp"></i> Reserva tu hora
             </a>
         </div>
@@ -109,6 +110,31 @@
         </div>
     </section>
 
+    <!-- 📸 NUEVA SECCIÓN: CORTES DESTACADOS (Deslizador horizontal) -->
+    <section class="cortes-destacados" id="cortes">
+        <h2>Cortes Destacados</h2>
+        <div class="cortes-slider">
+            <div class="cortes-track">
+                <div class="corte-card">
+                    <img src="img/corte1.jpg" alt="Corte 1">
+                    <span class="corte-price">$10.000</span>
+                </div>
+                <div class="corte-card">
+                    <img src="img/corte2.jpg" alt="Corte 2">
+                    <span class="corte-price">$10.000</span>
+                </div>
+                <div class="corte-card">
+                    <img src="img/corte3.jpg" alt="Corte 3">
+                    <span class="corte-price">$10.000</span>
+                </div>
+                <div class="corte-card">
+                    <img src="img/corte4.jpg" alt="Corte 4">
+                    <span class="corte-price">$10.000</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Galería -->
     <section class="gallery" id="galeria">
         <h2>Galería</h2>
@@ -139,8 +165,8 @@
             <div class="info-card">
                 <i class="fas fa-phone"></i>
                 <h3>Contacto</h3>
-                <p>+56 9 0000 0000</p>
-                <p>ejemplocorreo@gmail.com</p>
+                <p>+56 9 9695 7103</p>
+                <p>barbero.steven@ejemplo.com</p>
             </div>
         </div>
     </section>
@@ -168,10 +194,10 @@
                 <p>Tu estilo, nuestra pasión</p>
             </div>
             <div class="footer-social">
-                <a href="#" class="social-icon">
+                <a href="https://wa.me/56996957103" class="social-icon" target="_blank">
                     <i class="fab fa-whatsapp"></i>
                 </a>
-                <a href="#" class="social-icon">
+                <a href="https://instagram.com/Barbero_steven_bigfade" class="social-icon" target="_blank">
                     <i class="fab fa-instagram"></i>
                 </a>
                 <a href="#" class="social-icon">
@@ -185,7 +211,7 @@
     </footer>
 
     <!-- WhatsApp flotante -->
-    <a href="#" class="whatsapp-float">
+    <a href="https://wa.me/56996957103" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
