@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
         if (loader) {
             loader.classList.add('hidden');
         }
-    }, 2000); // 2 segundos de animación
+    }, 2000);
 });
 
 // ⚙️ PANEL DE AJUSTES
@@ -13,7 +13,6 @@ function toggleSettings() {
     const panel = document.getElementById('settingsPanel');
     panel.classList.toggle('open');
     
-    // Crear overlay si no existe
     let overlay = document.querySelector('.settings-overlay');
     if (!overlay) {
         overlay = document.createElement('div');
@@ -43,7 +42,6 @@ function setTheme(theme) {
     }
 }
 
-// Cargar tema guardado
 window.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
@@ -56,13 +54,11 @@ function setFontSize(size) {
     const btnNormal = document.getElementById('btnNormal');
     const btnLarge = document.getElementById('btnLarge');
     
-    // Quitar clases anteriores
     body.classList.remove('font-small', 'font-normal', 'font-large');
     btnSmall.classList.remove('active');
     btnNormal.classList.remove('active');
     btnLarge.classList.remove('active');
     
-    // Aplicar nuevo tamaño
     if (size === 'small') {
         body.classList.add('font-small');
         btnSmall.classList.add('active');
@@ -78,13 +74,12 @@ function setFontSize(size) {
     }
 }
 
-// Cargar tamaño de letra guardado
 window.addEventListener('DOMContentLoaded', () => {
     const savedFontSize = localStorage.getItem('fontSize') || 'normal';
     setFontSize(savedFontSize);
 });
 
-// Smooth scroll para los enlaces
+// Smooth scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
