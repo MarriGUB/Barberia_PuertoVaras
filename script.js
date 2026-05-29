@@ -131,35 +131,51 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// 📸 DESLIZADOR HORIZONTAL: permitir arrastrar con mouse
-const slider = document.querySelector('.gallery-slider');
-if (slider) {
-    let isDown = false;
-    let startX;
-    let scrollLeft;
+// 📸 GALERÍA CON FLECHAS
+const track = document.getElementById('galleryTrack');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+let currentIndex = 0;
+const items = document.querySelectorAll('.gallery-item');
+const itemsPerView = 1;
+const totalItems = items.length;
 
-    slider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        slider.style.cursor = 'grabbing';
-        startX = e.pageX - slider.offsetLeft;
-        scrollLeft = slider.scrollLeft;
-    });
-
-    slider.addEventListener('mouseleave', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mouseup', () => {
-        isDown = false;
-        slider.style.cursor = 'grab';
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - slider.offsetLeft;
-        const walk = (x - startX) * 2;
-        slider.scrollLeft = scrollLeft - walk;
-    });
+function updateGallery() {
+    if (!track) return;
+    const itemWidth = items[0]?.offsetWidth + 16; // 260px + gap 1rem
+    const newPosition = -currentIndex * itemWidth;
+    track.style.transform = `translateX(${newPosition}px)`;
 }
+
+function nextSlide() {
+    if (currentIndex < totalItems - itemsPerView) {
+        currentIndex++;
+    } else {
+        currentIndex = 0;
+    }
+    updateGallery();
+}
+
+function prevSlide() {
+    if (currentIndex > 0) {
+        currentIndex--;
+    } else {
+        currentIndex = totalItems - itemsPerView;
+    }
+    updateGallery();
+}
+
+if (prevBtn && nextBtn) {
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+}
+
+// Ajustar al redimensionar
+window.addEventListener('resize', () => {
+    updateGallery();
+});
+
+// Inicializar
+setTimeout(() => {
+    updateGallery();
+}, 100);
