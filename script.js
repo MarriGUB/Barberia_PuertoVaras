@@ -132,107 +132,38 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// GALERÍA CON FLECHAS CONDICIONALES
+// GALERÍA: FLECHAS SOLO EN MÓVIL
 // ============================================
-const track = document.getElementById('galleryTrack');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const slider = document.querySelector('.gallery-slider');
-let currentIndex = 0;
-let itemsPerView = 1;
 
-function getItemsPerView() {
-    if (!slider) return 1;
-    const sliderWidth = slider.clientWidth;
-    const itemWidth = 260; // ancho fijo de cada imagen
-    const gap = 24; // 1.5rem en px aprox
-    const totalItemWidth = itemWidth + gap;
-    const possibleItems = Math.floor(sliderWidth / totalItemWidth);
-    return Math.max(1, possibleItems);
-}
-
-function updateArrowsVisibility() {
-    if (!track || !prevBtn || !nextBtn) return;
+function checkAndToggleArrows() {
+    if (!prevBtn || !nextBtn || !slider) return;
     
-    const totalItems = document.querySelectorAll('.gallery-item').length;
-    const itemsVisible = getItemsPerView();
+    const isMobile = window.innerWidth <= 768;
     
-    // Si todas las imágenes caben sin scroll, ocultamos flechas
-    if (totalItems <= itemsVisible) {
-        prevBtn.classList.add('hidden-btn');
-        nextBtn.classList.add('hidden-btn');
-    } else {
+    if (isMobile) {
+        // En móvil: mostrar flechas y habilitarlas para deslizar
         prevBtn.classList.remove('hidden-btn');
         nextBtn.classList.remove('hidden-btn');
-    }
-}
-
-function updateGallery() {
-    if (!track) return;
-    const totalItems = document.querySelectorAll('.gallery-item').length;
-    const itemsVisible = getItemsPerView();
-    const itemWidth = 260;
-    const gap = 24;
-    const totalItemWidth = itemWidth + gap;
-    
-    // Limitar currentIndex
-    const maxIndex = Math.max(0, totalItems - itemsVisible);
-    if (currentIndex > maxIndex) currentIndex = maxIndex;
-    if (currentIndex < 0) currentIndex = 0;
-    
-    const newPosition = -currentIndex * totalItemWidth;
-    track.style.transform = `translateX(${newPosition}px)`;
-}
-
-function nextSlide() {
-    const totalItems = document.querySelectorAll('.gallery-item').length;
-    const itemsVisible = getItemsPerView();
-    const maxIndex = Math.max(0, totalItems - itemsVisible);
-    
-    if (currentIndex < maxIndex) {
-        currentIndex++;
+        
+        // Configurar flechas para scroll
+        prevBtn.onclick = () => {
+            slider.scrollBy({ left: -260, behavior: 'smooth' });
+        };
+        nextBtn.onclick = () => {
+            slider.scrollBy({ left: 260, behavior: 'smooth' });
+        };
     } else {
-        currentIndex = 0;
+        // En PC: ocultar flechas
+        prevBtn.classList.add('hidden-btn');
+        nextBtn.classList.add('hidden-btn');
+        prevBtn.onclick = null;
+        nextBtn.onclick = null;
     }
-    updateGallery();
 }
 
-function prevSlide() {
-    const totalItems = document.querySelectorAll('.gallery-item').length;
-    const itemsVisible = getItemsPerView();
-    const maxIndex = Math.max(0, totalItems - itemsVisible);
-    
-    if (currentIndex > 0) {
-        currentIndex--;
-    } else {
-        currentIndex = maxIndex;
-    }
-    updateGallery();
-}
-
-// Event listeners
-if (prevBtn && nextBtn) {
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-}
-
-// Actualizar al redimensionar
-window.addEventListener('resize', () => {
-    updateArrowsVisibility();
-    updateGallery();
-});
-
-// Inicializar
-setTimeout(() => {
-    updateArrowsVisibility();
-    updateGallery();
-}, 100);
-
-// También observar cambios en el slider
-if (slider) {
-    const resizeObserver = new ResizeObserver(() => {
-        updateArrowsVisibility();
-        updateGallery();
-    });
-    resizeObserver.observe(slider);
-}
+// Ejecutar al cargar y al redimensionar
+checkAndToggleArrows();
+window.addEventListener('resize', checkAndToggleArrows);

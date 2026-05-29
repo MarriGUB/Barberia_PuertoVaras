@@ -11,12 +11,6 @@ body {
     color: #e0e0e0;
 }
 
-/* MODO OSCURO (por defecto) */
-body {
-    background: #1a1a1a;
-    color: #e0e0e0;
-}
-
 /* MODO CLARO */
 body.light-mode {
     background: #ffffff;
@@ -424,27 +418,52 @@ body.light-mode .gallery {
     z-index: 10;
 }
 
-.gallery-btn:hover {
-    background: #d4b07a;
-    transform: scale(1.05);
-}
-
-/* Ocultar flechas en PC si no hay overflow (JS controla) */
 .gallery-btn.hidden-btn {
     display: none !important;
 }
 
 .gallery-slider {
-    overflow: hidden;
-    width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+/* Ocultar scrollbar en PC pero mantener funcionalidad */
+.gallery-slider {
+    scrollbar-width: thin;
+    scrollbar-color: #c19a6b #333;
+}
+
+.gallery-slider::-webkit-scrollbar {
+    height: 6px;
+}
+
+.gallery-slider::-webkit-scrollbar-track {
+    background: #333;
+    border-radius: 10px;
+}
+
+.gallery-slider::-webkit-scrollbar-thumb {
+    background: #c19a6b;
+    border-radius: 10px;
+}
+
+body.light-mode .gallery-slider::-webkit-scrollbar-track {
+    background: #ddd;
 }
 
 .gallery-track {
     display: flex;
-    transition: transform 0.4s ease-in-out;
     gap: 1.5rem;
+    padding: 0.5rem 0;
+}
+
+/* En PC: las imágenes se muestran en fila, centradas, sin necesidad de flechas */
+.gallery-track {
     justify-content: center;
+    flex-wrap: nowrap;
 }
 
 .gallery-item {
@@ -485,6 +504,48 @@ body.light-mode .gallery-item {
 
 body.light-mode .gallery-price {
     background: #f0f0f0;
+}
+
+/* En móvil: permitir scroll horizontal y mostrar flechas */
+@media (max-width: 768px) {
+    .gallery-track {
+        justify-content: flex-start;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .gallery-slider {
+        overflow-x: auto;
+    }
+    
+    .gallery-item {
+        flex: 0 0 220px;
+    }
+    
+    .gallery-item img {
+        height: 220px;
+    }
+    
+    .services h2, .gallery h2, .info h2, .map-section h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-social {
+        margin-top: 1rem;
+    }
 }
 
 /* Info Section */
@@ -567,38 +628,6 @@ body.light-mode footer {
     text-align: center;
     padding-top: 1rem;
     border-top: 1px solid #333;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-    
-    .hero-content p {
-        font-size: 1rem;
-    }
-    
-    .services h2, .gallery h2, .info h2, .map-section h2 {
-        font-size: 2rem;
-    }
-    
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .footer-social {
-        margin-top: 1rem;
-    }
-    
-    .gallery-item {
-        flex: 0 0 220px;
-    }
-    
-    .gallery-item img {
-        height: 220px;
-    }
 }
 
 /* Animaciones */
