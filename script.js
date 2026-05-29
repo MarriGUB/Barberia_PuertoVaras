@@ -132,73 +132,62 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// GALERÍA: Control de flechas y scroll
+// GALERÍA: Control de flechas y scroll horizontal
 // ============================================
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-const galleryGrid = document.getElementById('galleryGrid');
-const galleryItems = document.querySelectorAll('.gallery-item');
+const slider = document.getElementById('gallerySlider');
 
 function updateArrowsVisibility() {
-    if (!prevBtn || !nextBtn || !galleryGrid) return;
+    if (!prevBtn || !nextBtn || !slider) return;
     
     const isMobile = window.innerWidth <= 768;
-    const itemCount = galleryItems.length;
     
-    // En PC, solo mostrar flechas si hay más de 4 imágenes
-    if (!isMobile) {
-        if (itemCount > 4) {
+    if (isMobile) {
+        prevBtn.classList.remove('hidden-btn');
+        nextBtn.classList.remove('hidden-btn');
+    } else {
+        // En PC, si el contenido no desborda, ocultar flechas
+        const hasOverflow = slider.scrollWidth > slider.clientWidth;
+        if (hasOverflow) {
             prevBtn.classList.remove('hidden-btn');
             nextBtn.classList.remove('hidden-btn');
         } else {
             prevBtn.classList.add('hidden-btn');
             nextBtn.classList.add('hidden-btn');
         }
-    } else {
-        // En móvil, siempre mostrar flechas
-        prevBtn.classList.remove('hidden-btn');
-        nextBtn.classList.remove('hidden-btn');
     }
 }
 
-function setupMobileSlider() {
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile && galleryGrid) {
-        // Configurar scroll con flechas
-        const scrollAmount = 280;
-        
-        const scrollLeftHandler = () => {
-            galleryGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-        };
-        
-        const scrollRightHandler = () => {
-            galleryGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-        };
-        
-        // Remover listeners anteriores y agregar nuevos
-        prevBtn.removeEventListener('click', scrollLeftHandler);
-        nextBtn.removeEventListener('click', scrollRightHandler);
-        
-        prevBtn.addEventListener('click', scrollLeftHandler);
-        nextBtn.addEventListener('click', scrollRightHandler);
+function scrollLeft() {
+    if (slider) {
+        slider.scrollBy({ left: -280, behavior: 'smooth' });
     }
 }
 
-// Inicializar
+function scrollRight() {
+    if (slider) {
+        slider.scrollBy({ left: 280, behavior: 'smooth' });
+    }
+}
+
+// Configurar eventos de flechas
+if (prevBtn && nextBtn) {
+    prevBtn.onclick = scrollLeft;
+    nextBtn.onclick = scrollRight;
+}
+
+// Actualizar visibilidad de flechas al cargar, redimensionar y hacer scroll
 updateArrowsVisibility();
-setupMobileSlider();
-
-// Actualizar al redimensionar
-window.addEventListener('resize', () => {
-    updateArrowsVisibility();
-    setupMobileSlider();
-});
+window.addEventListener('resize', updateArrowsVisibility);
+if (slider) {
+    slider.addEventListener('scroll', updateArrowsVisibility);
+}
 
 // También observar cambios en el DOM
-const observerGrid = new ResizeObserver(() => {
+const resizeObserver = new ResizeObserver(() => {
     updateArrowsVisibility();
 });
-if (galleryGrid) {
-    observerGrid.observe(galleryGrid);
+if (slider) {
+    resizeObserver.observe(slider);
 }
