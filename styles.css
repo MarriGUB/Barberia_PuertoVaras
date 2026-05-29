@@ -7,13 +7,18 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    background: #1a1a1a;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* ========== MODO OSCURO (por defecto) ========== */
+body {
+    background-color: #1a1a1a;
     color: #e0e0e0;
 }
 
-/* MODO CLARO */
+/* ========== MODO CLARO ========== */
 body.light-mode {
-    background: #ffffff;
+    background-color: #ffffff;
     color: #1a1a1a;
 }
 
@@ -63,6 +68,7 @@ body.light-mode {
 body.light-mode .settings-panel {
     background: #f0f0f0;
     color: #1a1a1a;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
 }
 
 .settings-panel.open {
@@ -135,6 +141,7 @@ body.light-mode .settings-option span {
 body.light-mode .toggle-switch button {
     border-color: #ccc;
     color: #333;
+    background: transparent;
 }
 
 .toggle-switch button.active {
@@ -164,6 +171,7 @@ body.light-mode .toggle-switch button {
 body.light-mode .font-size-btns button {
     border-color: #ccc;
     color: #333;
+    background: transparent;
 }
 
 .font-size-btns button.active {
@@ -373,6 +381,7 @@ body.light-mode .service-card {
 .service-card h3 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
+    color: inherit;
 }
 
 .price {
@@ -383,7 +392,7 @@ body.light-mode .service-card {
     color: #c19a6b;
 }
 
-/* GALERÍA */
+/* GALERÍA - Grid responsiva */
 .gallery {
     padding: 5rem 5%;
     background: #1a1a1a;
@@ -398,8 +407,7 @@ body.light-mode .gallery {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    max-width: 100%;
-    margin: 0 auto;
+    position: relative;
 }
 
 .gallery-btn {
@@ -422,52 +430,21 @@ body.light-mode .gallery {
     display: none !important;
 }
 
-.gallery-slider {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+.gallery-btn:hover {
+    background: #d4b07a;
+    transform: scale(1.05);
 }
 
-/* Ocultar scrollbar en PC pero mantener funcionalidad */
-.gallery-slider {
-    scrollbar-width: thin;
-    scrollbar-color: #c19a6b #333;
-}
-
-.gallery-slider::-webkit-scrollbar {
-    height: 6px;
-}
-
-.gallery-slider::-webkit-scrollbar-track {
-    background: #333;
-    border-radius: 10px;
-}
-
-.gallery-slider::-webkit-scrollbar-thumb {
-    background: #c19a6b;
-    border-radius: 10px;
-}
-
-body.light-mode .gallery-slider::-webkit-scrollbar-track {
-    background: #ddd;
-}
-
-.gallery-track {
-    display: flex;
+/* Grid que muestra mínimo 4 imágenes en PC */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
-    padding: 0.5rem 0;
-}
-
-/* En PC: las imágenes se muestran en fila, centradas, sin necesidad de flechas */
-.gallery-track {
-    justify-content: center;
-    flex-wrap: nowrap;
+    width: 100%;
+    transition: all 0.3s;
 }
 
 .gallery-item {
-    flex: 0 0 260px;
     background: #2a2a2a;
     border-radius: 12px;
     overflow: hidden;
@@ -488,42 +465,79 @@ body.light-mode .gallery-item {
 
 .gallery-item img {
     width: 100%;
-    height: 260px;
+    height: 250px;
     object-fit: cover;
     display: block;
 }
 
+.gallery-info {
+    padding: 1rem;
+}
+
+.gallery-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #c19a6b;
+}
+
+body.light-mode .gallery-info h4 {
+    color: #c19a6b;
+}
+
 .gallery-price {
     display: block;
-    padding: 0.8rem;
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: bold;
     color: #c19a6b;
-    background: #2a2a2a;
 }
 
-body.light-mode .gallery-price {
-    background: #f0f0f0;
+/* Responsive: En móvil se convierte en slider con flechas */
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-/* En móvil: permitir scroll horizontal y mostrar flechas */
 @media (max-width: 768px) {
-    .gallery-track {
-        justify-content: flex-start;
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .gallery-container {
+        position: relative;
     }
     
-    .gallery-slider {
+    .gallery-grid {
+        display: flex;
         overflow-x: auto;
+        scroll-behavior: smooth;
+        gap: 1rem;
+        grid-template-columns: unset;
+        scrollbar-width: thin;
+        padding: 0.5rem 0;
+    }
+    
+    .gallery-grid::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .gallery-grid::-webkit-scrollbar-track {
+        background: #333;
+        border-radius: 10px;
+    }
+    
+    body.light-mode .gallery-grid::-webkit-scrollbar-track {
+        background: #ddd;
+    }
+    
+    .gallery-grid::-webkit-scrollbar-thumb {
+        background: #c19a6b;
+        border-radius: 10px;
     }
     
     .gallery-item {
-        flex: 0 0 220px;
+        flex: 0 0 260px;
+        min-width: 260px;
     }
     
-    .gallery-item img {
-        height: 220px;
+    .gallery-btn {
+        display: flex;
     }
     
     .services h2, .gallery h2, .info h2, .map-section h2 {
@@ -545,6 +559,19 @@ body.light-mode .gallery-price {
     
     .footer-social {
         margin-top: 1rem;
+    }
+}
+
+/* En PC grande, las flechas solo aparecen si hay más de 4 imágenes */
+@media (min-width: 769px) {
+    .gallery-btn {
+        display: flex;
+    }
+    
+    /* Si hay 4 o menos imágenes, ocultar flechas */
+    .gallery-grid:has(.gallery-item:nth-child(5)) ~ .gallery-btn,
+    .gallery-container:has(.gallery-grid .gallery-item:nth-child(5)) .gallery-btn {
+        display: flex;
     }
 }
 
@@ -575,6 +602,11 @@ body.light-mode .info {
     margin-bottom: 1rem;
 }
 
+.info-card h3 {
+    margin-bottom: 1rem;
+    color: inherit;
+}
+
 /* Map Section */
 .map-section {
     padding: 5rem 5%;
@@ -586,12 +618,13 @@ body.light-mode .map-section {
 }
 
 .map-container {
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
 .map-container iframe {
-    height: 350px;
+    height: 400px;
     width: 100%;
 }
 
@@ -604,6 +637,7 @@ footer {
 
 body.light-mode footer {
     background: #1a1a1a;
+    color: white;
 }
 
 .footer-content {

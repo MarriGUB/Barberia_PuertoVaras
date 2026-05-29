@@ -122,7 +122,7 @@ const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
     
-    if (currentScroll > lastScroll) {
+    if (currentScroll > lastScroll && currentScroll > 100) {
         if (navbar) navbar.style.transform = 'translateY(-100%)';
     } else {
         if (navbar) navbar.style.transform = 'translateY(0)';
@@ -132,38 +132,73 @@ window.addEventListener('scroll', () => {
 });
 
 // ============================================
-// GALERÍA: FLECHAS SOLO EN MÓVIL
+// GALERÍA: Control de flechas y scroll
 // ============================================
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-const slider = document.querySelector('.gallery-slider');
+const galleryGrid = document.getElementById('galleryGrid');
+const galleryItems = document.querySelectorAll('.gallery-item');
 
-function checkAndToggleArrows() {
-    if (!prevBtn || !nextBtn || !slider) return;
+function updateArrowsVisibility() {
+    if (!prevBtn || !nextBtn || !galleryGrid) return;
     
     const isMobile = window.innerWidth <= 768;
+    const itemCount = galleryItems.length;
     
-    if (isMobile) {
-        // En móvil: mostrar flechas y habilitarlas para deslizar
+    // En PC, solo mostrar flechas si hay más de 4 imágenes
+    if (!isMobile) {
+        if (itemCount > 4) {
+            prevBtn.classList.remove('hidden-btn');
+            nextBtn.classList.remove('hidden-btn');
+        } else {
+            prevBtn.classList.add('hidden-btn');
+            nextBtn.classList.add('hidden-btn');
+        }
+    } else {
+        // En móvil, siempre mostrar flechas
         prevBtn.classList.remove('hidden-btn');
         nextBtn.classList.remove('hidden-btn');
-        
-        // Configurar flechas para scroll
-        prevBtn.onclick = () => {
-            slider.scrollBy({ left: -260, behavior: 'smooth' });
-        };
-        nextBtn.onclick = () => {
-            slider.scrollBy({ left: 260, behavior: 'smooth' });
-        };
-    } else {
-        // En PC: ocultar flechas
-        prevBtn.classList.add('hidden-btn');
-        nextBtn.classList.add('hidden-btn');
-        prevBtn.onclick = null;
-        nextBtn.onclick = null;
     }
 }
 
-// Ejecutar al cargar y al redimensionar
-checkAndToggleArrows();
-window.addEventListener('resize', checkAndToggleArrows);
+function setupMobileSlider() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile && galleryGrid) {
+        // Configurar scroll con flechas
+        const scrollAmount = 280;
+        
+        const scrollLeftHandler = () => {
+            galleryGrid.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        };
+        
+        const scrollRightHandler = () => {
+            galleryGrid.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        };
+        
+        // Remover listeners anteriores y agregar nuevos
+        prevBtn.removeEventListener('click', scrollLeftHandler);
+        nextBtn.removeEventListener('click', scrollRightHandler);
+        
+        prevBtn.addEventListener('click', scrollLeftHandler);
+        nextBtn.addEventListener('click', scrollRightHandler);
+    }
+}
+
+// Inicializar
+updateArrowsVisibility();
+setupMobileSlider();
+
+// Actualizar al redimensionar
+window.addEventListener('resize', () => {
+    updateArrowsVisibility();
+    setupMobileSlider();
+});
+
+// También observar cambios en el DOM
+const observerGrid = new ResizeObserver(() => {
+    updateArrowsVisibility();
+});
+if (galleryGrid) {
+    observerGrid.observe(galleryGrid);
+}
