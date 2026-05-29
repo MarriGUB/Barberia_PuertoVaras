@@ -1,4 +1,4 @@
-// ✨ ANIMACIÓN DE ENTRADA (2 segundos, sin click)
+// ANIMACIÓN DE ENTRADA (2 segundos, sin click)
 window.addEventListener('load', () => {
     setTimeout(() => {
         const loader = document.getElementById('pageLoader');
@@ -8,7 +8,7 @@ window.addEventListener('load', () => {
     }, 2000);
 });
 
-// ⚙️ PANEL DE AJUSTES
+// PANEL DE AJUSTES
 function toggleSettings() {
     const panel = document.getElementById('settingsPanel');
     panel.classList.toggle('open');
@@ -23,7 +23,7 @@ function toggleSettings() {
     overlay.classList.toggle('show');
 }
 
-// 🌗 TEMA CLARO/OSCURO
+// TEMA CLARO/OSCURO
 function setTheme(theme) {
     const body = document.body;
     const btnDark = document.getElementById('btnDark');
@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
     setTheme(savedTheme);
 });
 
-// 🔤 TAMAÑO DE LETRA
+// TAMAÑO DE LETRA
 function setFontSize(size) {
     const body = document.body;
     const btnSmall = document.getElementById('btnSmall');
@@ -131,24 +131,65 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// 📸 GALERÍA CON FLECHAS
+// ============================================
+// GALERÍA CON FLECHAS CONDICIONALES
+// ============================================
 const track = document.getElementById('galleryTrack');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
+const slider = document.querySelector('.gallery-slider');
 let currentIndex = 0;
-const items = document.querySelectorAll('.gallery-item');
-const itemsPerView = 1;
-const totalItems = items.length;
+let itemsPerView = 1;
+
+function getItemsPerView() {
+    if (!slider) return 1;
+    const sliderWidth = slider.clientWidth;
+    const itemWidth = 260; // ancho fijo de cada imagen
+    const gap = 24; // 1.5rem en px aprox
+    const totalItemWidth = itemWidth + gap;
+    const possibleItems = Math.floor(sliderWidth / totalItemWidth);
+    return Math.max(1, possibleItems);
+}
+
+function updateArrowsVisibility() {
+    if (!track || !prevBtn || !nextBtn) return;
+    
+    const totalItems = document.querySelectorAll('.gallery-item').length;
+    const itemsVisible = getItemsPerView();
+    
+    // Si todas las imágenes caben sin scroll, ocultamos flechas
+    if (totalItems <= itemsVisible) {
+        prevBtn.classList.add('hidden-btn');
+        nextBtn.classList.add('hidden-btn');
+    } else {
+        prevBtn.classList.remove('hidden-btn');
+        nextBtn.classList.remove('hidden-btn');
+    }
+}
 
 function updateGallery() {
     if (!track) return;
-    const itemWidth = items[0]?.offsetWidth + 16; // 260px + gap 1rem
-    const newPosition = -currentIndex * itemWidth;
+    const totalItems = document.querySelectorAll('.gallery-item').length;
+    const itemsVisible = getItemsPerView();
+    const itemWidth = 260;
+    const gap = 24;
+    const totalItemWidth = itemWidth + gap;
+    
+    // Limitar currentIndex
+    const maxIndex = Math.max(0, totalItems - itemsVisible);
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+    if (currentIndex < 0) currentIndex = 0;
+    
+    const newPosition = -currentIndex * totalItemWidth;
     track.style.transform = `translateX(${newPosition}px)`;
 }
 
 function nextSlide() {
-    if (currentIndex < totalItems - itemsPerView) {
+    const totalItems = document.querySelectorAll('.gallery-item').length;
+    const itemsVisible = getItemsPerView();
+    const maxIndex = Math.max(0, totalItems - itemsVisible);
+    
+    if (currentIndex < maxIndex) {
         currentIndex++;
     } else {
         currentIndex = 0;
@@ -157,25 +198,41 @@ function nextSlide() {
 }
 
 function prevSlide() {
+    const totalItems = document.querySelectorAll('.gallery-item').length;
+    const itemsVisible = getItemsPerView();
+    const maxIndex = Math.max(0, totalItems - itemsVisible);
+    
     if (currentIndex > 0) {
         currentIndex--;
     } else {
-        currentIndex = totalItems - itemsPerView;
+        currentIndex = maxIndex;
     }
     updateGallery();
 }
 
+// Event listeners
 if (prevBtn && nextBtn) {
     prevBtn.addEventListener('click', prevSlide);
     nextBtn.addEventListener('click', nextSlide);
 }
 
-// Ajustar al redimensionar
+// Actualizar al redimensionar
 window.addEventListener('resize', () => {
+    updateArrowsVisibility();
     updateGallery();
 });
 
 // Inicializar
 setTimeout(() => {
+    updateArrowsVisibility();
     updateGallery();
 }, 100);
+
+// También observar cambios en el slider
+if (slider) {
+    const resizeObserver = new ResizeObserver(() => {
+        updateArrowsVisibility();
+        updateGallery();
+    });
+    resizeObserver.observe(slider);
+}
