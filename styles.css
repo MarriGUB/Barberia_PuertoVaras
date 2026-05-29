@@ -10,6 +10,230 @@ body {
     color: #333;
 }
 
+/* ⚙️ BOTÓN DE AJUSTES (ESQUINA SUPERIOR DERECHA) */
+.settings-trigger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #1a1a1a;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.3rem;
+    z-index: 1001;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s;
+}
+
+.settings-trigger:hover {
+    transform: rotate(90deg);
+    background: #c19a6b;
+}
+
+/* ⚙️ PANEL DE AJUSTES DESLIZABLE */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: #1a1a1a;
+    color: white;
+    z-index: 1002;
+    padding: 2rem 1.5rem;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+}
+
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.settings-header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.settings-header i {
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: color 0.3s;
+}
+
+.settings-header i:hover {
+    color: #c19a6b;
+}
+
+.settings-option {
+    margin-bottom: 2rem;
+}
+
+.settings-option span {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.toggle-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.toggle-switch button {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #444;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.toggle-switch button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: #1a1a1a;
+}
+
+.font-size-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.font-size-btns button {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #444;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.font-size-btns button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: #1a1a1a;
+}
+
+/* ✨ ANIMACIÓN DE ENTRADA */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    color: #c19a6b;
+    animation: pulse 1s infinite;
+}
+
+.loader-content i {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.loader-content h2 {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+/* 🔤 TAMAÑOS DE LETRA */
+body.font-small { font-size: 14px; }
+body.font-normal { font-size: 16px; }
+body.font-large { font-size: 18px; }
+
+body.font-small .hero-content h1 { font-size: 3rem; }
+body.font-large .hero-content h1 { font-size: 4rem; }
+
+/* 🌗 MODO CLARO - PANEL DE AJUSTES */
+body.light-mode .settings-trigger {
+    background: #c19a6b;
+    color: #1a1a1a;
+}
+
+body.light-mode .settings-panel {
+    background: #ffffff;
+    color: #1a1a1a;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+}
+
+body.light-mode .settings-header {
+    border-bottom: 1px solid #ddd;
+}
+
+body.light-mode .settings-option span {
+    color: #666;
+}
+
+body.light-mode .toggle-switch button,
+body.light-mode .font-size-btns button {
+    border-color: #ccc;
+    color: #333;
+}
+
+body.light-mode .toggle-switch button.active,
+body.light-mode .font-size-btns button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: white;
+}
+
+/* OVERLAY CUANDO EL PANEL ESTÁ ABIERTO */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1001;
+    display: none;
+}
+
+.settings-overlay.show {
+    display: block;
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/barberia-1.jpg');
@@ -273,4 +497,56 @@ footer {
 
 .service-card, .gallery-grid img, .info-card {
     animation: fadeIn 0.6s ease-out;
+}
+
+/* 🌗 MODO CLARO */
+body.light-mode {
+    background: #ffffff;
+    color: #333;
+}
+
+body.light-mode .hero {
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('img/barberia-1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #1a1a1a;
+}
+
+body.light-mode .navbar {
+    background: rgba(255,255,255,0.9);
+}
+
+body.light-mode .service-card {
+    background: #f8f9fa;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+body.light-mode .service-card:hover {
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+body.light-mode .services {
+    background: #ffffff;
+}
+
+body.light-mode .info {
+    background: #ffffff;
+}
+
+body.light-mode .gallery {
+    background: #ffffff;
+}
+
+body.light-mode .map-section {
+    background: #ffffff;
+}
+
+body.light-mode footer {
+    background: #333;
+    color: white;
+}
+
+body.light-mode .theme-toggle {
+    background: #c19a6b;
+    color: #1a1a1a;
 }

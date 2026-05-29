@@ -1,3 +1,89 @@
+// ✨ ANIMACIÓN DE ENTRADA
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const loader = document.getElementById('pageLoader');
+        if (loader) {
+            loader.classList.add('hidden');
+        }
+    }, 2000); // 2 segundos de animación
+});
+
+// ⚙️ PANEL DE AJUSTES
+function toggleSettings() {
+    const panel = document.getElementById('settingsPanel');
+    panel.classList.toggle('open');
+    
+    // Crear overlay si no existe
+    let overlay = document.querySelector('.settings-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'settings-overlay';
+        overlay.onclick = toggleSettings;
+        document.body.appendChild(overlay);
+    }
+    overlay.classList.toggle('show');
+}
+
+// 🌗 TEMA CLARO/OSCURO
+function setTheme(theme) {
+    const body = document.body;
+    const btnDark = document.getElementById('btnDark');
+    const btnLight = document.getElementById('btnLight');
+    
+    if (theme === 'light') {
+        body.classList.add('light-mode');
+        btnLight.classList.add('active');
+        btnDark.classList.remove('active');
+        localStorage.setItem('theme', 'light');
+    } else {
+        body.classList.remove('light-mode');
+        btnDark.classList.add('active');
+        btnLight.classList.remove('active');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Cargar tema guardado
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+});
+
+// 🔤 TAMAÑO DE LETRA
+function setFontSize(size) {
+    const body = document.body;
+    const btnSmall = document.getElementById('btnSmall');
+    const btnNormal = document.getElementById('btnNormal');
+    const btnLarge = document.getElementById('btnLarge');
+    
+    // Quitar clases anteriores
+    body.classList.remove('font-small', 'font-normal', 'font-large');
+    btnSmall.classList.remove('active');
+    btnNormal.classList.remove('active');
+    btnLarge.classList.remove('active');
+    
+    // Aplicar nuevo tamaño
+    if (size === 'small') {
+        body.classList.add('font-small');
+        btnSmall.classList.add('active');
+        localStorage.setItem('fontSize', 'small');
+    } else if (size === 'large') {
+        body.classList.add('font-large');
+        btnLarge.classList.add('active');
+        localStorage.setItem('fontSize', 'large');
+    } else {
+        body.classList.add('font-normal');
+        btnNormal.classList.add('active');
+        localStorage.setItem('fontSize', 'normal');
+    }
+}
+
+// Cargar tamaño de letra guardado
+window.addEventListener('DOMContentLoaded', () => {
+    const savedFontSize = localStorage.getItem('fontSize') || 'normal';
+    setFontSize(savedFontSize);
+});
+
 // Smooth scroll para los enlaces
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -27,7 +113,6 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-// Observar elementos para animación
 document.querySelectorAll('.service-card, .info-card, .gallery-grid img').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
@@ -35,14 +120,7 @@ document.querySelectorAll('.service-card, .info-card, .gallery-grid img').forEac
     observer.observe(el);
 });
 
-// Cambiar número de WhatsApp (actualiza esto con el número real)
-const whatsappNumber = '56912345678';
-const whatsappLinks = document.querySelectorAll('a[href*="wa.me"]');
-whatsappLinks.forEach(link => {
-    link.href = `https://wa.me/${whatsappNumber}`;
-});
-
-// Menú responsive simple (opcional)
+// Menú responsive
 let lastScroll = 0;
 const navbar = document.querySelector('.navbar');
 
@@ -56,31 +134,4 @@ window.addEventListener('scroll', () => {
     }
     
     lastScroll = currentScroll;
-});
-
-// 🌗 MODO CLARO/OSCURO
-function toggleTheme() {
-    const body = document.body;
-    const icon = document.getElementById('theme-icon');
-    
-    body.classList.toggle('light-mode');
-    
-    if (body.classList.contains('light-mode')) {
-        icon.className = 'fas fa-sun';
-        localStorage.setItem('theme', 'light');
-    } else {
-        icon.className = 'fas fa-moon';
-        localStorage.setItem('theme', 'dark');
-    }
-}
-
-// Cargar tema guardado
-window.addEventListener('DOMContentLoaded', () => {
-    const savedTheme = localStorage.getItem('theme');
-    const icon = document.getElementById('theme-icon');
-    
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        icon.className = 'fas fa-sun';
-    }
 });

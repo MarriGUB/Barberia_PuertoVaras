@@ -8,6 +8,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    
+    <!-- ✨ ANIMACIÓN DE ENTRADA -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-content">
+            <i class="fas fa-cut"></i>
+            <h2>Barbería</h2>
+        </div>
+    </div>
+
+    <!-- ⚙️ BOTÓN DE AJUSTES -->
+    <div class="settings-trigger" onclick="toggleSettings()" title="Ajustes">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <!-- ⚙️ PANEL DE AJUSTES -->
+    <div class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h3>Ajustes</h3>
+            <i class="fas fa-times" onclick="toggleSettings()"></i>
+        </div>
+        
+        <div class="settings-option">
+            <span>Tema</span>
+            <div class="toggle-switch">
+                <button onclick="setTheme('dark')" id="btnDark" class="active">🌙 Oscuro</button>
+                <button onclick="setTheme('light')" id="btnLight">☀️ Claro</button>
+            </div>
+        </div>
+        
+        <div class="settings-option">
+            <span>Tamaño de letra</span>
+            <div class="font-size-btns">
+                <button onclick="setFontSize('small')" id="btnSmall">A-</button>
+                <button onclick="setFontSize('normal')" id="btnNormal" class="active">A</button>
+                <button onclick="setFontSize('large')" id="btnLarge">A+</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Header / Hero -->
     <header class="hero">
         <nav class="navbar">
@@ -95,7 +134,7 @@
                 <i class="fas fa-map-marker-alt"></i>
                 <h3>Ubicación</h3>
                 <p>Dirección de ejemplo 123</p>
-                <p>Ciudad, Chile</p>
+                <p>Puerto Varas, Chile</p>
             </div>
             <div class="info-card">
                 <i class="fas fa-phone"></i>
@@ -111,7 +150,7 @@
         <h2>Encuéntranos</h2>
         <div class="map-container">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.022794422433!2d-70.64827368480137!3d-33.44839928077519!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzPCsDI2JzU0LjIiUyA3MMKwMzgnMjguMCJX!5e0!3m2!1ses!2scl!4v1234567890" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95652.123456789!2d-72.9827!3d-41.3178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDE5JzA0LjEiUyA3MsKwNTgnNTcuNyJX!5e0!3m2!1ses!2scl!4v1234567890" 
                 width="100%" 
                 height="450" 
                 style="border:0;" 
@@ -149,11 +188,6 @@
     <a href="#" class="whatsapp-float">
         <i class="fab fa-whatsapp"></i>
     </a>
-
-    <!-- Botón de tema claro/oscuro -->
-    <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
-        <i class="fas fa-moon" id="theme-icon"></i>
-    </button>
 
     <script src="script.js"></script>
 </body>
