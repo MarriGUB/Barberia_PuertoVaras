@@ -108,7 +108,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-document.querySelectorAll('.service-card, .info-card, .gallery-grid img, .corte-card').forEach(el => {
+document.querySelectorAll('.service-card, .info-card, .gallery-item').forEach(el => {
     el.style.opacity = '0';
     el.style.transform = 'translateY(20px)';
     el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
@@ -132,7 +132,7 @@ window.addEventListener('scroll', () => {
 });
 
 // 📸 DESLIZADOR HORIZONTAL: permitir arrastrar con mouse
-const slider = document.querySelector('.cortes-slider');
+const slider = document.querySelector('.gallery-slider');
 if (slider) {
     let isDown = false;
     let startX;

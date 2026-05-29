@@ -1,21 +1,351 @@
-/* 📸 NUEVA SECCIÓN: CORTES DESTACADOS - Deslizador horizontal */
-.cortes-destacados {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* ⚙️ BOTÓN DE AJUSTES (ESQUINA SUPERIOR DERECHA) */
+.settings-trigger {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.3rem;
+    z-index: 10000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    transition: all 0.3s;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.settings-trigger:hover {
+    transform: rotate(90deg);
+    background: #c19a6b;
+    border-color: #c19a6b;
+}
+
+/* ⚙️ PANEL DE AJUSTES DESLIZABLE */
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: #1a1a1a;
+    color: white;
+    z-index: 10001;
+    padding: 2rem 1.5rem;
+    transition: right 0.3s ease;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+    overflow-y: auto;
+}
+
+.settings-panel.open {
+    right: 0;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.settings-header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #c19a6b;
+}
+
+.settings-header i {
+    cursor: pointer;
+    font-size: 1.3rem;
+    transition: color 0.3s;
+    padding: 5px;
+}
+
+.settings-header i:hover {
+    color: #c19a6b;
+}
+
+.settings-option {
+    margin-bottom: 2rem;
+}
+
+.settings-option span {
+    display: block;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    font-weight: bold;
+}
+
+.toggle-switch {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.toggle-switch button {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #444;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.toggle-switch button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: #1a1a1a;
+    font-weight: bold;
+}
+
+.font-size-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.font-size-btns button {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid #444;
+    background: transparent;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.font-size-btns button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: #1a1a1a;
+}
+
+/* ✨ ANIMACIÓN DE ENTRADA */
+.page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.page-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader-content {
+    text-align: center;
+    color: #c19a6b;
+    animation: pulse 1s infinite;
+}
+
+.loader-content i {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.loader-content h2 {
+    font-size: 1.5rem;
+    letter-spacing: 3px;
+}
+
+.welcome-message {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #c19a6b;
+    letter-spacing: 2px;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+/* 🔤 TAMAÑOS DE LETRA */
+body.font-small { font-size: 14px; }
+body.font-normal { font-size: 16px; }
+body.font-large { font-size: 18px; }
+
+body.font-small .hero-content h1 { font-size: 3rem; }
+body.font-large .hero-content h1 { font-size: 4rem; }
+
+/* OVERLAY CUANDO EL PANEL ESTÁ ABIERTO */
+.settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    display: none;
+}
+
+.settings-overlay.show {
+    display: block;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('img/barberia-1.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: rgba(0,0,0,0.5);
+}
+
+.logo img {
+    height: 50px;
+    border-radius: 50%;
+}
+
+.nav-info span {
+    margin-left: 2rem;
+}
+
+.hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.btn-whatsapp {
+    background: #25D366;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: transform 0.3s;
+}
+
+.btn-whatsapp:hover {
+    transform: scale(1.05);
+}
+
+/* Services Section */
+.services {
+    padding: 5rem 5%;
+    background: #f8f9fa;
+}
+
+.services h2, .gallery h2, .info h2, .map-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #1a1a1a;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+.service-card i {
+    font-size: 3rem;
+    color: #c19a6b;
+    margin-bottom: 1rem;
+}
+
+.service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.price {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #c19a6b;
+}
+
+/* 📸 GALERÍA CON DESLIZADOR HORIZONTAL - TAMAÑO MODERADO */
+.gallery {
     padding: 5rem 5%;
     background: #1a1a1a;
 }
 
-body.light-mode .cortes-destacados {
-    background: #f8f9fa;
+body.light-mode .gallery {
+    background: #ffffff;
 }
 
-.cortes-destacados h2 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
+.gallery h2 {
     color: #c19a6b;
 }
 
-.cortes-slider {
+.gallery-slider {
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
@@ -26,21 +356,21 @@ body.light-mode .cortes-destacados {
     -webkit-overflow-scrolling: touch;
 }
 
-.cortes-slider:active {
+.gallery-slider:active {
     cursor: grabbing;
 }
 
-.cortes-track {
+.gallery-track {
     display: inline-flex;
     gap: 1.5rem;
     padding: 0 1rem;
 }
 
-.corte-card {
+.gallery-item {
     display: inline-block;
-    width: 280px;
+    width: 260px;
     background: #2a2a2a;
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
@@ -48,74 +378,268 @@ body.light-mode .cortes-destacados {
     white-space: normal;
 }
 
-body.light-mode .corte-card {
-    background: white;
+body.light-mode .gallery-item {
+    background: #f8f9fa;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.corte-card:hover {
-    transform: translateY(-8px);
+.gallery-item:hover {
+    transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
-.corte-card img {
+.gallery-item img {
     width: 100%;
-    height: 280px;
+    height: 260px;
     object-fit: cover;
     display: block;
 }
 
-.corte-price {
+.gallery-price {
     display: block;
-    padding: 1rem;
-    font-size: 1.5rem;
+    padding: 0.8rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #c19a6b;
     background: #2a2a2a;
 }
 
-body.light-mode .corte-price {
-    background: white;
+body.light-mode .gallery-price {
+    background: #f8f9fa;
 }
 
 /* Scrollbar personalizada */
-.cortes-slider::-webkit-scrollbar {
-    height: 8px;
+.gallery-slider::-webkit-scrollbar {
+    height: 6px;
 }
 
-.cortes-slider::-webkit-scrollbar-track {
+.gallery-slider::-webkit-scrollbar-track {
     background: #333;
     border-radius: 10px;
 }
 
-body.light-mode .cortes-slider::-webkit-scrollbar-track {
+body.light-mode .gallery-slider::-webkit-scrollbar-track {
     background: #ddd;
 }
 
-.cortes-slider::-webkit-scrollbar-thumb {
+.gallery-slider::-webkit-scrollbar-thumb {
     background: #c19a6b;
     border-radius: 10px;
 }
 
-/* Mensaje de bienvenida en el loader */
-.welcome-message {
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    color: #c19a6b;
-    letter-spacing: 2px;
+/* Info Section */
+.info {
+    padding: 5rem 5%;
+    background: #f8f9fa;
 }
 
-/* Responsive para cortes */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    text-align: center;
+    padding: 2rem;
+}
+
+.info-card i {
+    font-size: 2.5rem;
+    color: #c19a6b;
+    margin-bottom: 1rem;
+}
+
+/* Map Section */
+.map-section {
+    padding: 5rem 5%;
+}
+
+.map-container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.map-container iframe {
+    height: 350px;
+}
+
+/* Footer */
+footer {
+    background: #1a1a1a;
+    color: white;
+    padding: 2rem 5% 1rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.footer-social .social-icon {
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    transition: color 0.3s;
+}
+
+.footer-social .social-icon:hover {
+    color: #c19a6b;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1rem;
+    border-top: 1px solid #333;
+}
+
+/* WhatsApp Float Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s;
+    z-index: 1000;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-    .corte-card {
-        width: 240px;
+    .hero-content h1 {
+        font-size: 2.5rem;
     }
     
-    .corte-card img {
-        height: 240px;
+    .hero-content p {
+        font-size: 1rem;
     }
     
-    .cortes-destacados h2 {
+    .services h2, .gallery h2, .info h2, .map-section h2 {
         font-size: 2rem;
     }
+    
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-social {
+        margin-top: 1rem;
+    }
+    
+    .gallery-item {
+        width: 220px;
+    }
+    
+    .gallery-item img {
+        height: 220px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.service-card, .gallery-item, .info-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* 🌗 MODO CLARO */
+body.light-mode {
+    background: #ffffff;
+    color: #333;
+}
+
+body.light-mode .hero {
+    background: linear-gradient(rgba(255,255,255,0.9), rgba(255,255,255,0.9)), url('img/barberia-1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #1a1a1a;
+}
+
+body.light-mode .navbar {
+    background: rgba(255,255,255,0.9);
+}
+
+body.light-mode .service-card {
+    background: #ffffff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+body.light-mode .services {
+    background: #f8f9fa;
+}
+
+body.light-mode .info {
+    background: #ffffff;
+}
+
+body.light-mode .map-section {
+    background: #ffffff;
+}
+
+body.light-mode footer {
+    background: #333;
+    color: white;
+}
+
+/* MODO CLARO - PANEL DE AJUSTES */
+body.light-mode .settings-trigger {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border-color: rgba(0,0,0,0.3);
+}
+
+body.light-mode .settings-panel {
+    background: #ffffff;
+    color: #1a1a1a;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+}
+
+body.light-mode .settings-header {
+    border-bottom: 1px solid #ddd;
+}
+
+body.light-mode .settings-header h3 {
+    color: #c19a6b;
+}
+
+body.light-mode .settings-option span {
+    color: #666;
+}
+
+body.light-mode .toggle-switch button,
+body.light-mode .font-size-btns button {
+    border-color: #ccc;
+    color: #333;
+}
+
+body.light-mode .toggle-switch button.active,
+body.light-mode .font-size-btns button.active {
+    background: #c19a6b;
+    border-color: #c19a6b;
+    color: white;
 }
